@@ -53,6 +53,11 @@ dkms.conf
 
 
 cmake-build-debug/*
-.idea/*
+.idea/
 /linters/*
-
+project/tests/input_emulator/fscanf_fprintf/fprintf/0x7
+project/tests/input_emulator/fscanf_fprintf/fprintf/1x7
+project/tests/input_emulator/fscanf_fprintf/fprintf/2x2
+project/tests/input_emulator/fscanf_fprintf/fprintf/5x1
+project/tests/input_emulator/fscanf_fprintf/fprintf/7x6
+project/tests/input_emulator/multiply_matrices/*/fout

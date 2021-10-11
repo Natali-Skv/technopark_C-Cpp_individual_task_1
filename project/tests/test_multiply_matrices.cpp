@@ -44,6 +44,7 @@ protected:
     }
 
     void CompareFiles(FILE *f1, FILE *f2) {
+        ASSERT_TRUE(f1 && f2);
         char bufFin[bufSize];
         char bufFout[bufSize];
         while (!feof(f1) && !feof(f2)) {

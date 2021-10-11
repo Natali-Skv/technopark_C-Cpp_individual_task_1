@@ -15,7 +15,6 @@ protected:
     void SetUp(const char *finPath, const char *foutPath) {
         FILE *fin = fopen(finPath, "r");
         FILE *fout = fopen(foutPath, "w+");
-        std::cout << foutPath << "\n" << finPath << '\n' << PROJECT_PATH<<'\n';
         ASSERT_TRUE(fin && fout);
         Matrix_t mtrx = {0u, 0u, NULL};
         EXPECT_EQ(fscanf_mtrx_sizes(fin, &mtrx), 0);
@@ -32,6 +31,7 @@ protected:
     }
 
     void CompareFiles(FILE *f1, FILE *f2) {
+        ASSERT_TRUE(f1 && f2);
         char bufFin[bufSize];
         char bufFout[bufSize];
         while (!feof(f1) && !feof(f2)) {
