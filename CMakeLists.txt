@@ -4,7 +4,7 @@ project(tp_hw1)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDART_REQURED ON)
 
-set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage -pthread")
 set(CMAKE_C_FLAGS "-g -O0 -Wall -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage")
 set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 set(TESTS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_main.cpp
