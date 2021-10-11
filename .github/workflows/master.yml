@@ -47,7 +47,7 @@ jobs:
       - name: test 
         run: |
           cd build
-          valgrind --leak-check=full tests
+          valgrind --leak-check=full ./tests
                 
       - name: coverage
         run: |
