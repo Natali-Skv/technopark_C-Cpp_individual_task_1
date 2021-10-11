@@ -49,15 +49,30 @@ jobs:
           cd build
           valgrind --leak-check=full ./tests
                 
-      - name: coverage
+      - name: Coverage test
         run: |
-          cd build
-          make gcov
-          make lcov
-      
-      - name: archive code coverage results
+          sudo apt-get install lcov
+          ./build/tests
+          mkdir coverage && cd coverage
+          gcov ../build/matrix.c.gcno
+          cp -r ../build/CMakeFiles/task.dir/project/task/src/ .
+          cd ..
+          lcov --capture --directory coverage/ --output-file matrix.info
+          genhtml matrix.info --output-directory coverage-report/
+      - name: Archive coverage test results
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-report_linear
-          path: build/test/lcoverage
+          name: Coverage test
+          path: coverage-report/
+
+      - name: Valgrind test
+        run: |
+          sudo apt-get install -y valgrind
+          mkdir valgrid-output
+          valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --log-file=valgrid-output/report -q ./build/test.out
+      - name: Archive valgrind test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Valgrind test
+          path: valgrid-output/
                      
