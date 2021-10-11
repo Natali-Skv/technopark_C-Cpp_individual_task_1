@@ -44,7 +44,7 @@ jobs:
           cmake ..
           make
           
-      - name: test 
+      - name: tests 
         run: |
           cd build
           valgrind --leak-check=full ./tests
@@ -65,14 +65,13 @@ jobs:
           name: Coverage test
           path: coverage-report/
 
-      - name: Valgrind test
+      - name: Valgrind tests
         run: |
-          sudo apt-get install -y valgrind
-          mkdir valgrid-output
-          valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --log-file=valgrid-output/report -q ./build/tests
+          mkdir valgrind-report
+          valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --log-file=valgrind-report/report -q ./build/tests
       - name: Archive valgrind test results
         uses: actions/upload-artifact@v2
         with:
-          name: Valgrind test
-          path: valgrid-output/
+          name: Valgrind tests
+          path: valgrind-report/
                      
