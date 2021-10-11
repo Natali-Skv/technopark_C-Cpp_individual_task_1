@@ -17,17 +17,17 @@ protected:
         FILE *foutExp = fopen(foutExpPath, "r");
         ASSERT_TRUE(fin && fout && foutExp);
 
-        Matrix_t mtrx1 = load_mtrx(fin);
-        Matrix_t mtrx2 = load_mtrx(fin);
-        Matrix_t mtrx_product = multiply(mtrx1, mtrx2);
+        Matrix_t mtrx_lhs = load_mtrx(fin);
+        Matrix_t mtrx_rhs = load_mtrx(fin);
+        Matrix_t mtrx_product = multiply(mtrx_lhs, mtrx_rhs);
 
         upload_mtrx(fout, mtrx_product);
 
         fseek(fout, 0, SEEK_SET);
         CompareFiles(fout, foutExp);
 
-        free_mtrx(mtrx1.elems, mtrx1.rows);
-        free_mtrx(mtrx2.elems, mtrx2.rows);
+        free_mtrx(mtrx_lhs.elems, mtrx_lhs.rows);
+        free_mtrx(mtrx_rhs.elems, mtrx_rhs.rows);
         free_mtrx(mtrx_product.elems, mtrx_product.rows);
         fclose(fin);
         fclose(fout);
@@ -85,6 +85,7 @@ TEST(MULTIPLY_MATRICES, MULTIPLY_INVALID_ARGS) {
     mtrx_product = multiply(mtrx_2x1, mtrx_2x2);
     EXPECT_TRUE(is_mtrx_empty(&mtrx_product));
 
+    fclose(fin);
     free_mtrx(mtrx_2x2.elems, mtrx_2x2.rows);
     free_mtrx(mtrx_2x1.elems, mtrx_2x1.rows);
 }
