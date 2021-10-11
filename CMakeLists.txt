@@ -4,19 +4,18 @@ project(tp_hw1)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDART_REQURED ON)
 
-set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage -pthread")
-set(CMAKE_C_FLAGS "-g -O0 -Wall -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Werror -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage -pthread")
+set(CMAKE_C_FLAGS "-g -O0 -Wall -Werror -Wextra -Wno-unused-variable -Wpedantic -fprofile-arcs -ftest-coverage")
 set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 set(TESTS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_main.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_calloc.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_fscanf_fprint.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_multiply_matrices.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_load_upload.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/project/tests/test_multiply.cpp
         )
 add_compile_definitions(PROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/project/")
 
 
 add_library(matrix_lib STATIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/project/src/matrix.c
+        project/src/matrix_lib/matrix.c
         )
 
 target_include_directories(matrix_lib
@@ -24,7 +23,8 @@ target_include_directories(matrix_lib
         )
 
 add_executable(main
-        ${CMAKE_CURRENT_SOURCE_DIR}/project/src/main.c)
+        ${CMAKE_CURRENT_SOURCE_DIR}/project/cmd/main.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/project/src/task/task.c)
 
 target_include_directories(main
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/project/include
