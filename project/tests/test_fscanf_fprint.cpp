@@ -10,13 +10,12 @@ extern "C" {
 
 class FixturePrintScan : public ::testing::Test {
 protected:
-    FILE *fin = nullptr;
-    FILE *fout = nullptr;
     static const int bufSize = 100;
 
     void SetUp(const char *finPath, const char *foutPath) {
-        fin = fopen(finPath, "r");
-        fout = fopen(foutPath, "w+");
+        FILE *fin = fopen(finPath, "r");
+        FILE *fout = fopen(foutPath, "w+");
+        std::cout << foutPath << "\n" << finPath << '\n' << PROJECT_PATH<<'\n';
         ASSERT_TRUE(fin && fout);
         Matrix_t mtrx = {0u, 0u, NULL};
         EXPECT_EQ(fscanf_mtrx_sizes(fin, &mtrx), 0);
@@ -28,6 +27,8 @@ protected:
         fseek(fout, 0, SEEK_SET);
         CompareFiles(fin, fout);
         free_mtrx(mtrx.elems, mtrx.rows);
+        EXPECT_EQ(fclose(fin), 0);
+        EXPECT_EQ(fclose(fout), 0);
     }
 
     void CompareFiles(FILE *f1, FILE *f2) {
@@ -42,8 +43,6 @@ protected:
     }
 
     void TearDown() override {
-        EXPECT_EQ(fclose(fin), 0);
-        EXPECT_EQ(fclose(fout), 0);
     }
 };
 

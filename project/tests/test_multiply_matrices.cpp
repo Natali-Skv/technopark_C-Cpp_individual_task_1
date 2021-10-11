@@ -9,15 +9,12 @@ extern "C" {
 
 class FixtureMultiply : public ::testing::Test {
 protected:
-    FILE *fin = nullptr;
-    FILE *fout = nullptr;
-    FILE *foutExp = nullptr;
     static const int bufSize = 100;
 
     void SetUp(const char *finPath, const char *foutPath, const char *foutExpPath) {
-        fin = fopen(finPath, "r");
-        fout = fopen(foutPath, "w+");
-        foutExp = fopen(foutExpPath, "r");
+        FILE *fin = fopen(finPath, "r");
+        FILE *fout = fopen(foutPath, "w+");
+        FILE *foutExp = fopen(foutExpPath, "r");
         ASSERT_TRUE(fin && fout && foutExp);
         Matrix_t mtrx1 = {0u, 0u, NULL};
         EXPECT_EQ(fscanf_mtrx_sizes(fin, &mtrx1), 0);
@@ -40,6 +37,10 @@ protected:
         free_mtrx(mtrx1.elems, mtrx1.rows);
         free_mtrx(mtrx2.elems, mtrx2.rows);
         free_mtrx(mtrx_product.elems, mtrx_product.rows);
+
+        EXPECT_EQ(fclose(fin), 0);
+        EXPECT_EQ(fclose(fout), 0);
+        EXPECT_EQ(fclose(foutExp), 0);
     }
 
     void CompareFiles(FILE *f1, FILE *f2) {
@@ -54,9 +55,6 @@ protected:
     }
 
     void TearDown() {
-        EXPECT_EQ(fclose(fin), 0);
-        EXPECT_EQ(fclose(fout), 0);
-        EXPECT_EQ(fclose(foutExp), 0);
     }
 };
 
