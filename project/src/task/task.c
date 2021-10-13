@@ -15,13 +15,13 @@ int run(FILE *fin, FILE *fout) {
 
     Matrix_t mtrx_lhs = load_mtrx(fin);
     if (is_mtrx_empty(&mtrx_lhs)) {
-        fprintf(stderr, __FILE__ ": load_mtrx() failed\n");
+        fprintf(stderr, __FILE__ ": load of matrix failed\n");
         return 0;
     }
 
     Matrix_t mtrx_rhs = load_mtrx(fin);
     if (is_mtrx_empty(&mtrx_rhs)) {
-        fprintf(stderr, __FILE__ ": load_mtrx() failed\n");
+        fprintf(stderr, __FILE__ ": load of matrix failed\n");
         free_mtrx(mtrx_lhs.elems, mtrx_lhs.rows);
         return 0;
     }
@@ -29,6 +29,7 @@ int run(FILE *fin, FILE *fout) {
     Matrix_t matrix_product = multiply(mtrx_lhs, mtrx_rhs);
 
     if (is_mtrx_empty(&matrix_product)) {
+        fprintf(stderr, __FILE__ ": matrix multiplication failed\n");
         free_mtrx(mtrx_lhs.elems, mtrx_lhs.rows);
         free_mtrx(mtrx_rhs.elems, mtrx_rhs.rows);
         return 0;
@@ -43,6 +44,5 @@ int run(FILE *fin, FILE *fout) {
     free_mtrx(mtrx_lhs.elems, mtrx_lhs.rows);
     free_mtrx(mtrx_rhs.elems, mtrx_rhs.rows);
     free_mtrx(matrix_product.elems, matrix_product.rows);
-    printf("%s", PROJECT_PATH);
     return 0;
 }
